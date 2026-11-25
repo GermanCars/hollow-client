@@ -1,0 +1,1 @@
+{"schemaVersion":1,"id":"hollow-test","version":"1","environment":"client","entrypoints":{"fabric-client-gametest":["dev.hollow.test.ModuleTest","dev.hollow.test.LookTest","dev.hollow.test.InputTest"]}}

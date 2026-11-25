@@ -1,0 +1,29 @@
+plugins { id 'net.fabricmc.fabric-loom' version '1.17.21' }
+version = project.findProperty('modVersion') ?: '0.1.0'
+group = 'dev.hollow'
+base { archivesName = 'hollow-client-26.3' }
+repositories {
+    mavenCentral()
+    exclusiveContent {
+        forRepository { maven { url = 'https://api.modrinth.com/maven' } }
+        filter { includeGroup 'maven.modrinth' }
+    }
+}
+// Litematica is optional at run time, so it is only compiled against.
+def litematica = ['maven.modrinth:litematica:0.29.1', 'maven.modrinth:malilib:0.30.2']
+dependencies {
+    minecraft 'com.mojang:minecraft:26.3'
+    implementation 'net.fabricmc:fabric-loader:0.19.5'
+    implementation 'net.fabricmc.fabric-api:fabric-api:0.165.0+26.3'
+    litematica.each { compileOnly it }
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.13.4'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+java { toolchain { languageVersion = JavaLanguageVersion.of(25) } }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8'; options.release = 25 }
+processResources { def v = project.version; inputs.property 'version', v; filesMatching('fabric.mod.json') { expand(version: v) } }
+test { useJUnitPlatform() }
+fabricApi { configureTests { createSourceSet = true; modId = 'hollow-test'; enableGameTests = false; enableClientGameTests = true; eula = true } }
+dependencies { litematica.each { gametestCompileOnly it } }
+// -Ppack=<folder> runs the client tests with extra mods loaded.
+if (project.hasProperty('pack')) loom.runs.configureEach { if (it.name == 'clientGameTest') vmArg "-Dfabric.addMods=${project.property('pack')}" }

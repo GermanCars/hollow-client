@@ -1,0 +1,19 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+      - run: chmod +x gradlew && ./gradlew build -x runClientGameTest -PmodVersion="${GITHUB_REF_NAME#v}"
+      - run: gh release create "$GITHUB_REF_NAME" build/libs/hollow-client-*.jar --title "Hollow Client ${GITHUB_REF_NAME#v}" --notes-file docs/RELEASE.md
+        env:
+          GH_TOKEN: ${{ github.token }}

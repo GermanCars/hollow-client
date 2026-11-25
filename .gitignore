@@ -1,0 +1,13 @@
+.gradle/
+build/
+run/
+logs/
+libs/
+backup/
+mockups/
+screenshots/
+docs/superpowers/
+.claude/
+.idea/
+.vscode/
+*.log

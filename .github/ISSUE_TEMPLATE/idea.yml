@@ -1,0 +1,7 @@
+name: Idea
+description: A module, HUD element or change you would like
+labels: [idea]
+body:
+  - type: textarea
+    attributes: { label: What should it do }
+    validations: { required: true }

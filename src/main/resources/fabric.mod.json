@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "id": "hollow",
+  "version": "${version}",
+  "name": "Hollow Client",
+  "description": "PvP and schematic building client for anarchy servers.",
+  "contact": { "homepage": "https://github.com/GermanCars/hollow-client", "sources": "https://github.com/GermanCars/hollow-client", "issues": "https://github.com/GermanCars/hollow-client/issues" },
+  "license": "All-Rights-Reserved",
+  "environment": "client",
+  "entrypoints": { "client": ["dev.hollow.Hollow"] },
+  "mixins": ["hollow.mixins.json"],
+  "depends": { "fabricloader": ">=0.19.5", "minecraft": "~26.3", "java": ">=25", "fabric-api": "*" },
+  "suggests": { "litematica": "*" }
+}
